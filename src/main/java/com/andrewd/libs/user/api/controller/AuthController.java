@@ -11,6 +11,7 @@ import com.andrewd.libs.user.domain.Role;
 import com.andrewd.libs.user.domain.User;
 import com.andrewd.libs.user.repository.UserRepository;
 import com.andrewd.libs.user.api.request.LoginUser;
+import com.andrewd.libs.user.service.AuthService;
 import com.andrewd.libs.user.service.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,8 @@ public class AuthController {
 
     private final JwtProvider jwtProvider;
 
+    private final AuthService authService;
+
     @PostMapping("/login")
     ResponseEntity authenticateUser(@Valid @RequestBody LoginUser request) {
         Optional<User> userCandidate = userRepository.findByUserName(request.getUsername());
@@ -59,24 +62,14 @@ public class AuthController {
 
     @PostMapping("/register")
     ResponseEntity registerUser(@Valid @RequestBody Registration request) {
-        Optional<User> userCandidate = userRepository.findByUserName(request.getUsername());
 
-        if (!userCandidate.isPresent()) {
-            User user = User.builder()
-                    .userName(request.getUsername())
-                    .email(request.getEmail())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .role(Role.ROLE_USER)
-                    .build();
-
-            userRepository.save(user);
-
-            return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+        if (!authService.register(request)) {
+            return new ResponseEntity<>(
+                    new ResponseMessage("User already exists!"),
+                    HttpStatus.BAD_REQUEST
+            );
         }
 
-        return new ResponseEntity<>(
-                new ResponseMessage("User already exists!"),
-                HttpStatus.BAD_REQUEST
-        );
+        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
 }
