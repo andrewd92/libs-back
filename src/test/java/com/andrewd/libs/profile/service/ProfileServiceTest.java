@@ -26,7 +26,14 @@ public class ProfileServiceTest {
 
     @Test
     public void getByIdShouldReturnProfileEntity() {
-        Profile expectedProfile=  new Profile(1, 1, "Andrew", 1, 1, 1, 1);
+        Profile expectedProfile =
+                Profile.builder()
+                .id(1)
+                .userId(1)
+                .name("Andrew")
+                .username("andrewd")
+                .email("andrewd@mail.loc")
+                .build();
 
          when(profileRepository.findById(expectedProfile.getId()))
                  .thenReturn(Optional.of(expectedProfile));

@@ -5,8 +5,11 @@ import java.util.Optional;
 import com.andrewd.libs.user.api.request.Registration;
 import com.andrewd.libs.user.domain.Role;
 import com.andrewd.libs.user.domain.User;
+import com.andrewd.libs.user.event.UserCreatedEvent;
+import com.andrewd.libs.user.exception.UserAlreadyExists;
 import com.andrewd.libs.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +21,26 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public Boolean register(Registration request) {
+    private final ApplicationEventPublisher applicationEventPublisher;
+
+    public void register(Registration request) {
         Optional<User> userCandidate = userRepository.findByUserName(request.getUsername());
 
-        if (!userCandidate.isPresent()) {
-            User user = User.builder()
-                    .userName(request.getUsername())
-                    .email(request.getEmail())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .role(Role.ROLE_USER)
-                    .build();
-
-            userRepository.save(user);
-
-            return true;
+        if (userCandidate.isPresent()) {
+            throw new UserAlreadyExists();
         }
 
-        return false;
+        User user = User.builder()
+                .userName(request.getUsername())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.ROLE_USER)
+                .build();
+
+        userRepository.save(user);
+
+        applicationEventPublisher.publishEvent(
+                new UserCreatedEvent(this, user, request.getFullName())
+        );
     }
 }

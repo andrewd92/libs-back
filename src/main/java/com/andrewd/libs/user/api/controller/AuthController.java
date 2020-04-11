@@ -33,8 +33,6 @@ public class AuthController {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
     private final JwtProvider jwtProvider;
 
     private final AuthService authService;
@@ -63,9 +61,11 @@ public class AuthController {
     @PostMapping("/register")
     ResponseEntity registerUser(@Valid @RequestBody Registration request) {
 
-        if (!authService.register(request)) {
+        try {
+            authService.register(request);
+        } catch (Exception e) {
             return new ResponseEntity<>(
-                    new ResponseMessage("User already exists!"),
+                    new ResponseMessage(e.getMessage()),
                     HttpStatus.BAD_REQUEST
             );
         }

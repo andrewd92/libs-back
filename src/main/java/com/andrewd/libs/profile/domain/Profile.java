@@ -6,11 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Profile {
@@ -22,11 +24,15 @@ public class Profile {
 
     private String name;
 
-    private int countReadBooks;
+    private String username;
 
-    private int countReadingNowBooks;
+    private String email;
 
-    private int followersCount;
+    private int countReadBooks = 0;
 
-    private int followingCount;
+    private int countReadingNowBooks = 0;
+
+    private int followersCount = 0;
+
+    private int followingCount = 0;
 }
