@@ -4,8 +4,10 @@ import javax.validation.Valid;
 
 import java.util.Optional;
 
+import com.andrewd.libs.user.api.request.Registration;
 import com.andrewd.libs.user.api.response.JwtResponse;
 import com.andrewd.libs.user.api.response.ResponseMessage;
+import com.andrewd.libs.user.domain.Role;
 import com.andrewd.libs.user.domain.User;
 import com.andrewd.libs.user.repository.UserRepository;
 import com.andrewd.libs.user.api.request.LoginUser;
@@ -53,5 +55,28 @@ public class AuthController {
         }
 
         return new ResponseEntity<>(new ResponseMessage("User not found!"), HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/register")
+    ResponseEntity registerUser(@Valid @RequestBody Registration request) {
+        Optional<User> userCandidate = userRepository.findByUserName(request.getUsername());
+
+        if (!userCandidate.isPresent()) {
+            User user = User.builder()
+                    .userName(request.getUsername())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.ROLE_USER)
+                    .build();
+
+            userRepository.save(user);
+
+            return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(
+                new ResponseMessage("User already exists!"),
+                HttpStatus.BAD_REQUEST
+        );
     }
 }
