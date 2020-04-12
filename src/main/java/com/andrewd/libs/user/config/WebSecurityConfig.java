@@ -28,11 +28,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthEntryPoint unauthorizedHandler;
 
-    private final JwtAuthTokenFilter authTokenFilter;
+    private final JwtProvider tokenProvider;
 
     @Bean
-    BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtAuthTokenFilter authTokenFilter() {
+        return new JwtAuthTokenFilter(tokenProvider, userDetailsService);
     }
 
     @Override
@@ -57,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 }

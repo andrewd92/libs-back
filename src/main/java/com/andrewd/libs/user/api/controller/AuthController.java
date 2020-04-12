@@ -52,7 +52,7 @@ public class AuthController {
 
             String jwt = jwtProvider.generateJwtToken(user.getUserName());
 
-            return ResponseEntity.ok(new JwtResponse(jwt, user.getUserName(), user.getRole()));
+            return ResponseEntity.ok(new JwtResponse(jwt, user.getId(), user.getUserName(), user.getRole()));
         }
 
         return new ResponseEntity<>(new ResponseMessage("User not found!"), HttpStatus.BAD_REQUEST);
