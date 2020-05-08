@@ -1,5 +1,6 @@
 package com.andrewd.libs.book.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.andrewd.libs.book.api.request.NewBook;
@@ -40,5 +41,9 @@ public class BookService {
 
     public Book getBook(long id) {
         return bookRepository.findById(id).get();
+    }
+
+    public List<Book> find(String query) {
+        return bookRepository.findByTitleContainsOrISBNContainsOrISBN13Contains(query, query, query);
     }
 }

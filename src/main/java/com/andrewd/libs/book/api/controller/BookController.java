@@ -3,6 +3,8 @@ package com.andrewd.libs.book.api.controller;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import com.andrewd.libs.book.api.request.NewBook;
 import com.andrewd.libs.book.domain.Book;
 import com.andrewd.libs.book.service.BookService;
@@ -27,5 +29,10 @@ public class BookController {
     @GetMapping("/{id}")
     public Book get(@PathVariable long id) {
         return bookService.getBook(id);
+    }
+
+    @GetMapping("/find/{query}")
+    public List<Book> get(@PathVariable String query) {
+        return bookService.find(query);
     }
 }
