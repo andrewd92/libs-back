@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+@CrossOrigin("http://localhost:8081")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth/v1/")

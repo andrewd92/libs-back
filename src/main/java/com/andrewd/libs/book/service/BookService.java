@@ -37,4 +37,8 @@ public class BookService {
                 .build()
         );
     }
+
+    public Book getBook(long id) {
+        return bookRepository.findById(id).get();
+    }
 }

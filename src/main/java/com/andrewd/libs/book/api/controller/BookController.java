@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/book/v1")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class BookController {
 
@@ -22,5 +22,10 @@ public class BookController {
     @PostMapping("/")
     public Book addBook(@Valid @RequestBody NewBook request) {
         return bookService.addBook(request);
+    }
+
+    @GetMapping("/{id}")
+    public Book get(@PathVariable long id) {
+        return bookService.getBook(id);
     }
 }
