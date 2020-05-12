@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.andrewd.libs.profile.domain.Profile;
 import com.andrewd.libs.profile.repository.ProfileRepository;
-import com.andrewd.libs.profile.service.ProfileService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
