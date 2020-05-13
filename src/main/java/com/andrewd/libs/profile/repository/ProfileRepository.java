@@ -7,5 +7,7 @@ import com.andrewd.libs.user.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ProfileRepository extends CrudRepository<Profile, Long> {
+    Profile findByUserId(long userId);
+
     List<Profile> findTop10ByUsernameContainsOrEmailContainsOrNameContains(String userName, String email, String name);
 }

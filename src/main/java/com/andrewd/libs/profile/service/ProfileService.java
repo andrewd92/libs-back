@@ -20,4 +20,12 @@ public class ProfileService {
     public List<Profile> find(String query) {
         return profileRepository.findTop10ByUsernameContainsOrEmailContainsOrNameContains(query, query, query);
     }
+
+    public void readingBookAdded(long userId) {
+        Profile profile = profileRepository.findByUserId(userId);
+
+        profile.newReadingStarted();
+
+        profileRepository.save(profile);
+    }
 }

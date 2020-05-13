@@ -35,4 +35,8 @@ public class Profile {
     private int followersCount = 0;
 
     private int followingCount = 0;
+
+    public void newReadingStarted() {
+        countReadingNowBooks++;
+    }
 }
