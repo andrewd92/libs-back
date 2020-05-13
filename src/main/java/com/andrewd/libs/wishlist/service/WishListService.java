@@ -1,5 +1,7 @@
 package com.andrewd.libs.wishlist.service;
 
+import java.util.List;
+
 import com.andrewd.libs.book.domain.Book;
 import com.andrewd.libs.book.service.BookService;
 import com.andrewd.libs.wishlist.domain.WishList;
@@ -30,6 +32,10 @@ public class WishListService {
                         .imageUrl(book.getImageUrl())
                         .build()
         );
+    }
+
+    public List<WishList> getFor(long userId) {
+        return repository.findAllByUserId(userId);
     }
 
 }

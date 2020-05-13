@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "wish_list", indexes = {
+        @Index(name = "wishlist_unique", columnList = "userId,bookId", unique = true)
+})
 public class WishList {
 
     @Id

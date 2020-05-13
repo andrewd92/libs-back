@@ -2,6 +2,8 @@ package com.andrewd.libs.wishlist.api.controller;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import com.andrewd.libs.wishlist.api.request.AddWishRequest;
 import com.andrewd.libs.wishlist.domain.WishList;
 import com.andrewd.libs.wishlist.service.WishListService;
@@ -19,5 +21,10 @@ public class WishListController {
     @PostMapping("/")
     public WishList add(@Valid @RequestBody AddWishRequest request) {
         return wishListService.addToWishList(request.getUserId(), request.getBookId());
+    }
+
+    @GetMapping("/{userId}")
+    public List<WishList> get(@PathVariable long userId) {
+        return wishListService.getFor(userId);
     }
 }
