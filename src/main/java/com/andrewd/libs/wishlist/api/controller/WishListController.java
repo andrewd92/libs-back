@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/wishlist/v1")
-@CrossOrigin("*")
+@CrossOrigin()
 @RequiredArgsConstructor
 public class WishListController {
 

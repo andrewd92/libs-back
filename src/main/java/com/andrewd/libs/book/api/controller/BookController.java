@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/book/v1")
-@CrossOrigin("*")
+@CrossOrigin()
 @RequiredArgsConstructor
 public class BookController {
 

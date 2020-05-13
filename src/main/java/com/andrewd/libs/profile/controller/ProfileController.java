@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/profile/v1")
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin()
 public class ProfileController {
 
     private final ProfileService profileService;
