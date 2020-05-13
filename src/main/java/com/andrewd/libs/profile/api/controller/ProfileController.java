@@ -1,5 +1,10 @@
-package com.andrewd.libs.profile.controller;
+package com.andrewd.libs.profile.api.controller;
 
+import javax.validation.Valid;
+
+import java.util.List;
+
+import com.andrewd.libs.profile.api.request.UserSearch;
 import com.andrewd.libs.profile.domain.Profile;
 import com.andrewd.libs.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -16,5 +21,10 @@ public class ProfileController {
     @GetMapping("/{id}")
     public Profile getById(@PathVariable int id) {
         return profileService.getById(id);
+    }
+
+    @PostMapping("/find/")
+    public List<Profile> find(@Valid @RequestBody UserSearch request) {
+        return profileService.find(request.getQuery());
     }
 }

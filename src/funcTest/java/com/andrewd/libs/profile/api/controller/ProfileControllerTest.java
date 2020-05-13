@@ -1,4 +1,4 @@
-package com.andrewd.libs.profile.controller;
+package com.andrewd.libs.profile.api.controller;
 
 import com.andrewd.libs.profile.domain.Profile;
 import com.andrewd.libs.profile.repository.ProfileRepository;

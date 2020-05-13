@@ -1,5 +1,7 @@
 package com.andrewd.libs.profile.service;
 
+import java.util.List;
+
 import com.andrewd.libs.profile.domain.Profile;
 import com.andrewd.libs.profile.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,5 +15,9 @@ public class ProfileService {
 
     public Profile getById(long id) {
         return profileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile don't exist"));
+    }
+
+    public List<Profile> find(String query) {
+        return profileRepository.findTop10ByUsernameContainsOrEmailContainsOrNameContains(query, query, query);
     }
 }
