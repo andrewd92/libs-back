@@ -1,9 +1,6 @@
 package com.andrewd.libs.user.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-
-import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

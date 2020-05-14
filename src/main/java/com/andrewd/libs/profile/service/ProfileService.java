@@ -28,4 +28,20 @@ public class ProfileService {
 
         profileRepository.save(profile);
     }
+
+    public void readBookAdded(long userId) {
+        Profile profile = profileRepository.findByUserId(userId);
+
+        profile.newBookRead();
+
+        profileRepository.save(profile);
+    }
+
+    public void readingBookFinished(long userId) {
+        Profile profile = profileRepository.findByUserId(userId);
+
+        profile.readingFinished();
+
+        profileRepository.save(profile);
+    }
 }

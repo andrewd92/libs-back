@@ -39,4 +39,12 @@ public class Profile {
     public void newReadingStarted() {
         countReadingNowBooks++;
     }
+
+    public void newBookRead() {
+        countReadBooks++;
+    }
+
+    public void readingFinished() {
+        countReadingNowBooks--;
+    }
 }

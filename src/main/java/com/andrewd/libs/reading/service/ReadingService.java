@@ -1,6 +1,7 @@
 package com.andrewd.libs.reading.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.andrewd.libs.book.domain.Book;
 import com.andrewd.libs.book.service.BookService;
@@ -41,5 +42,15 @@ public class ReadingService {
         profileService.readingBookAdded(readingBook.getUserId());
 
         return readingBook;
+    }
+
+    public void newBookRead(long userId, long bookId) {
+        Optional<ReadingBook> bookCandidate = readingRepository.findByUserIdAndBookId(userId, bookId);
+
+        if (bookCandidate.isPresent()) {
+            readingRepository.delete(bookCandidate.get());
+
+            profileService.readingBookFinished(userId);
+        }
     }
 }
